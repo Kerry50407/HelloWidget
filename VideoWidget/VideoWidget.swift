@@ -72,7 +72,7 @@ struct VideoWidgetEntryView : View {
     }
 }
 
-
+@main
 struct MediaWidget: WidgetBundle {
     @WidgetBundleBuilder
     var body: some Widget {
@@ -81,7 +81,6 @@ struct MediaWidget: WidgetBundle {
     }
 }
 
-@main
 struct VideoWidget: Widget {
     private let kind: String = "VideoWidget"
 
@@ -89,7 +88,7 @@ struct VideoWidget: Widget {
         StaticConfiguration(kind: kind, provider: Provider(), placeholder: PlaceholderView()) { entry in
             VideoWidgetEntryView(entry: entry)
         }
-        .configurationDisplayName("My Widget")
+        .configurationDisplayName("Video Widget")
         .description("This is an example widget.")
         .supportedFamilies([.systemSmall, .systemMedium, .systemLarge])
     }
@@ -102,7 +101,7 @@ struct MusicWidget: Widget {
         StaticConfiguration(kind: kind, provider: Provider(), placeholder: PlaceholderView()) { entry in
             VideoWidgetEntryView(entry: entry)
         }
-        .configurationDisplayName("Hi Hi Widget")
+        .configurationDisplayName("Music Widget")
         .description("This is an example widget.")
         .supportedFamilies([.systemSmall, .systemMedium, .systemLarge])
     }
