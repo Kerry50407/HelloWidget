@@ -25,7 +25,7 @@ platform :ios do
   # end
 
   lane :buildApp do 
-    build_app(workspace: "HelloWidget.xcodeproj", scheme: "HelloWidget")
+    build_app(workspace: "HelloWidget.xcworkspace", scheme: "HelloWidget")
     enable_automatic_code_signing(path: "HelloWidget.xcodeproj")
   end
 end
