@@ -11,7 +11,7 @@ import SwiftUI
 struct Provider: TimelineProvider {
     public typealias Entry = SimpleEntry
 
-    public func snapshot(with context: Context, completion: @escaping (SimpleEntry) -> ()) {
+    func getSnapshot(in context: Context, completion: @escaping (SimpleEntry) -> Void) {
         if context.isPreview {
             
         }
@@ -19,7 +19,7 @@ struct Provider: TimelineProvider {
         completion(entry)
     }
 
-    public func timeline(with context: Context, completion: @escaping (Timeline<Entry>) -> ()) {
+    func getTimeline(in context: Context, completion: @escaping (Timeline<SimpleEntry>) -> Void) {
         var entries: [SimpleEntry] = []
 
         // Generate a timeline consisting of five entries an hour apart, starting from the current date.
@@ -33,16 +33,14 @@ struct Provider: TimelineProvider {
         let timeline = Timeline(entries: entries, policy: .atEnd)
         completion(timeline)
     }
+    
+    func placeholder(in context: Context) -> SimpleEntry {
+        return SimpleEntry(date: Date())
+    }
 }
 
 struct SimpleEntry: TimelineEntry {
     public let date: Date
-}
-
-struct PlaceholderView : View {
-    var body: some View {
-        Text("Placeholder View")
-    }
 }
 
 struct VideoWidgetEntryView : View {
@@ -85,8 +83,8 @@ struct VideoWidget: Widget {
     private let kind: String = "VideoWidget"
 
     public var body: some WidgetConfiguration {
-        StaticConfiguration(kind: kind, provider: Provider(), placeholder: PlaceholderView()) { entry in
-            VideoWidgetEntryView(entry: entry)
+        StaticConfiguration(kind: kind, provider: Provider()) { entry in
+            return VideoWidgetEntryView(entry: entry)
         }
         .configurationDisplayName("Video Widget")
         .description("This is an example widget.")
@@ -98,8 +96,8 @@ struct MusicWidget: Widget {
     private let kind: String = "MusicWidget"
 
     public var body: some WidgetConfiguration {
-        StaticConfiguration(kind: kind, provider: Provider(), placeholder: PlaceholderView()) { entry in
-            VideoWidgetEntryView(entry: entry)
+        StaticConfiguration(kind: kind, provider: Provider()) { entry in
+            return VideoWidgetEntryView(entry: entry)
         }
         .configurationDisplayName("Music Widget")
         .description("This is an example widget.")
